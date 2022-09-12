@@ -1,0 +1,5 @@
+.prettierrc
+package.json
+tsconfig.*.json
+tsconfig.json
+.vite-inspect

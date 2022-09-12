@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "@bluryar/*": ["packages/*/src"]
+    },
+    "skipLibCheck": true,
+    "types": ["naive-ui/volar", "vite/client", "unplugin-icons/types/vue"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/*.d.ts",
+    "packages/*/src",
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.d.ts",
+    "packages/*/src/**/*.tsx",
+    "packages/*/src/**/*.vue"
+  ],
+  "exclude": ["dist", "node_modules", "cypress", ".vite-inspect"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

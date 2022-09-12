@@ -1,0 +1,13 @@
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp,
+pre {
+  font-size: 1em;
+  /* 2 */
+  font-family: 'Fira Code', monospace, monospace !important;
+  /* 1 */
+}
