@@ -2,6 +2,7 @@
 <script lang="tsx" setup>
 import { Button } from '@arco-design/web-vue';
 import { ref, defineAsyncComponent } from 'vue';
+import '@arco-design/web-vue/dist/arco.css';
 
 import { getVModelRecord } from '@bluryar/shared';
 import { useDialog } from '.';

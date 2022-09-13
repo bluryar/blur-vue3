@@ -20,7 +20,7 @@ export class PageDTO {
   };
 }
 
-export class PageVO<T = any> {
+export class PageVO<ItemVO = any> {
   /** 当前页码, 从0开始 */
   current?: number;
 
@@ -31,7 +31,7 @@ export class PageVO<T = any> {
   pages?: number;
 
   /** 数据结果集 */
-  records?: Array<T>;
+  records?: Array<ItemVO>;
 
   /** 每页显示条数 */
   size?: number;
@@ -40,4 +40,4 @@ export class PageVO<T = any> {
   total?: number;
 }
 
-export type Service = <Params extends PageDTO, Response>(parmas?: Params) => Promise<PageVO<Response>>;
+export type Service = <Params extends PageDTO, ItemVO>(parmas?: Partial<Params>) => Promise<PageVO<ItemVO>>;

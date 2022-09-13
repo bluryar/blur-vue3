@@ -4,9 +4,31 @@
 
 import type { AttributifyAttributes } from '@unocss/preset-attributify';
 
+import type { FunctionalComponent, TransitionProps } from 'vue';
+
 declare module '@vue/runtime-core' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface HTMLAttributes extends AttributifyAttributes {}
+
+  export interface TransitionProps {
+    name:
+      | 'fade-in'
+      | 'slide-dynamic-origin'
+      | 'slide-left'
+      | 'slide-right'
+      | 'slide-top'
+      | 'slide-bottom'
+      | 'zoom-in'
+      | 'zoom-in-big'
+      | 'zoom-in-left'
+      | 'zoom-in-top'
+      | 'zoom-in-bottom'
+      | 'zoom-in-fade-out';
+  }
+
+  export interface GlobalComponents {
+    Transition: FunctionalComponent<TransitionProps>;
+  }
 }
 
 declare module '@ant-design/colors' {
