@@ -1,8 +1,6 @@
-import type { AntColorType, PalettesProps } from '@ant-design/colors';
 import { presetPalettes, presetDarkPalettes } from '@ant-design/colors';
 import type { ArcoColorType } from '@arco-design/color';
-import { generate, getPresetColors } from '@arco-design/color';
-import type { Preset, ThemeConfig } from 'unocss';
+import { getPresetColors } from '@arco-design/color';
 
 export interface Options {
   /**

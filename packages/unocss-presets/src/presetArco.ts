@@ -1,6 +1,8 @@
 import type { Preset, ThemeConfig } from 'unocss';
 
 import { getNormalizePresetPalettes } from './gen';
+import type { UnocssColorItem } from './types';
+import { parseCssVarName, trySetColor } from './utils';
 
 export interface PresetArcoOptions {
   /**
@@ -11,58 +13,10 @@ export interface PresetArcoOptions {
   cssVarPrefix?: string;
 }
 
-const parseCssVarName = (rawName: string, prefix?: string) => {
-  const cssPrefix = !prefix || prefix === '' ? '--' : `--${prefix}-`;
-  return `var(${cssPrefix}${rawName})`;
-};
-
-type UnocssColorItem = Record<
-  number | 'DEFAULT' | 'active' | 'hover' | 'regular' | 'special' | 'disabled' | 'text-disabled' | 'shallow',
-  string
->;
-
-const trySetColor = ({
-  target,
-  prefix,
-  name,
-  idx,
-}: {
-  target: Partial<UnocssColorItem>;
-  prefix: string;
-  name: string;
-  idx: number;
-}) => {
-  const colorVal = parseCssVarName(`${name}-${idx}`, prefix);
-  if (idx === 1) {
-    target['shallow'] = colorVal;
-  }
-  if (idx === 2) {
-    target['text-disabled'] = colorVal;
-  }
-  if (idx === 3) {
-    target['disabled'] = colorVal;
-  }
-  if (idx === 4) {
-    target['special'] = colorVal;
-  }
-  if (idx === 5) {
-    target['hover'] = colorVal;
-  }
-  if (idx === 6) {
-    target['DEFAULT'] = colorVal;
-    target['regular'] = colorVal;
-  }
-  if (idx === 7) {
-    target['active'] = colorVal;
-  }
-  target[idx] = colorVal;
-  target[idx * 100] = colorVal;
-};
-
 /**
  * @param type 采用那种设计体系下的design token，默认采用arco design的
  */
-export function presetArco({ cssVarPrefix = '' }: PresetArcoOptions = {}): Partial<Preset<Partial<ThemeConfig>>> {
+export function presetArco({ cssVarPrefix = '' }: PresetArcoOptions = {}): Preset<Partial<ThemeConfig>> {
   const theme: Partial<ThemeConfig> = {
     colors: {},
   };
