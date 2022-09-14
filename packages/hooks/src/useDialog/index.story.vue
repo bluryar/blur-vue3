@@ -1,8 +1,11 @@
 <!-- 交互式文档 -- 使用 `<Story>` 和 `<Variant>` 组件来写交互 -->
 <script lang="tsx" setup>
 import { Button } from '@arco-design/web-vue';
-import { ref, defineAsyncComponent } from 'vue';
+import { ref, defineAsyncComponent, computed, unref, watch } from 'vue';
 import '@arco-design/web-vue/dist/arco.css';
+
+import { omit, set } from 'lodash-es';
+import { reactiveOmit } from '@vueuse/core';
 
 import { getVModelRecord } from '@bluryar/shared';
 import { useDialog } from '.';
@@ -19,6 +22,56 @@ const { Dialog: Dialog2, openDialog: openDialog2 } = useDialog(
   () => getVModelRecord(count2, 'count'),
 );
 const { Dialog: Dialog3, openDialog: openDialog3 } = useDialog(defineAsyncComponent(() => import('./demo/dialog.vue')));
+
+const refData = ref({
+  page: {
+    current: 0,
+    size: 0,
+  },
+  other: {
+    foo: 1,
+  },
+});
+
+const other = computed(() => omit(unref(refData), ['page']));
+const other2 = reactiveOmit(unref(refData), 'page');
+let obj = {};
+
+set(obj, '', { test: 1, test2: {} });
+console.log('🚀 ~ file: index.story.vue ~ line 41 ~ obj', obj);
+
+watch(
+  refData,
+  () => {
+    console.log('🚀 ~ file: index.story.vue ~ line 40 ~ watch ~ refData', refData);
+    return;
+  },
+  { deep: !!1 },
+);
+watch(
+  other,
+  () => {
+    console.log('🚀 ~ file: index.story.vue ~ line 45 ~ watch ~ other', other);
+    return;
+  },
+  { deep: !!1 },
+);
+watch(
+  other2,
+  () => {
+    console.log('🚀 ~ file: index.story.vue ~ line 50 ~ watch ~ other2', other2);
+    return;
+  },
+  { deep: !!1 },
+);
+
+setTimeout(() => {
+  refData.value.page.current = 100;
+  refData.value.page.size = 100;
+}, 1000);
+setTimeout(() => {
+  refData.value.other.foo = 200;
+}, 2000);
 </script>
 
 <template>
