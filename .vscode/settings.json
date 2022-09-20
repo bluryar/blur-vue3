@@ -178,7 +178,7 @@
   "svg.preview.mode": "svg",
   "volar.autoCompleteRefs": false,
   "volar.codeLens.pugTools": false,
-  "volar.codeLens.scriptSetupTools": true,
+  "volar.codeLens.scriptSetupTools": false,
   "volar.completion.preferredTagNameCase": "pascal",
   "windicss.enableCodeFolding": false,
 
@@ -282,5 +282,9 @@
     "vueuse"
   ],
   "npm-scripts.showStartNotification": false,
-  "volar.vueserver.useSecondServer": true
+  "volar.vueserver.useSecondServer": true,
+  "volar.codeLens.references": false,
+  "volar.diagnostics.delay": 300,
+  "volar.icon.preview": false,
+  "volar.updateImportsOnFileMove.enabled": false
 }
