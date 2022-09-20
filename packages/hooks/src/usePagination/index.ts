@@ -5,7 +5,6 @@ import { useRequest } from 'vue-request';
 import type { PageDTO, PageVO } from './types';
 import type { VueRequestReturn, Service } from './types';
 import { ref, unref, computed, watch } from 'vue';
-import { omit, set } from 'lodash-es';
 
 export interface Options<Params, ItemVO extends PageVO<any>> extends VueRequestOptions<ItemVO, [params?: Params]> {
   defaultParams?: [params?: Params];
@@ -34,11 +33,6 @@ export interface Options<Params, ItemVO extends PageVO<any>> extends VueRequestO
 
 export interface UsePaginationReturns<Params extends PageDTO, ItemVO>
   extends VueRequestReturn<PageVO<ItemVO>, [params?: Params]> {
-  /** 用于搜索表单编辑的参数, 注意, 这一份参数可以直接用户表单, 但是如果发送请求, 手动调用下面的`submit`方法 */
-  formData: Ref<Partial<Params>>;
-
-  submit: () => void;
-
   pagination: {
     /** 当前页码, 从1开始, 注意, 我们的后端接口定义是从0开始的, 因此我们需要在onBefore和onSuccess做一些操作 */
     current: Ref<number>;
@@ -49,7 +43,8 @@ export interface UsePaginationReturns<Params extends PageDTO, ItemVO>
     /** 总页数 */
     pages: Ref<number>;
     /** 接口使用的页码, 注意是只读的 */
-    apiCurrent: ComputedRef<Readonly<number>>;
+    currentForApi: ComputedRef<Readonly<number>>;
+    /** 数据列表，省去每次都判断`unref(data)?.records` */
     list: ComputedRef<ItemVO[]>;
     onChange: (current: number, size: number) => void;
     /** @alias {@link pagination.onChange} */
@@ -95,39 +90,23 @@ export const usePagination = <Params extends PageDTO, ItemVO>(
   const total = ref(0);
   const pages = ref(0);
 
-  const formData = ref(defaultParams) as Ref<Partial<Params>>;
-  const editingFormData = ref(defaultParams) as Ref<Partial<Params>>;
-  const syncSetFormData = (key: string, value: any) => {
-    set(unref(formData), key, value);
-    set(unref(editingFormData), key, value);
-  };
-  const syncRewriteFormData = (val: Partial<Params>) => {
-    formData.value = val;
-    editingFormData.value = val;
-  };
-  const submit = () => {
-    formData.value = editingFormData.value;
-  };
+  const currentForApi = computed(() => unref(current) - (mergedOptions.isSyncCurrent ? 0 : 1));
 
-  const apiCurrent = computed(() => unref(current) - (mergedOptions.isSyncCurrent ? 0 : 1));
-
-  const setCurrent = (val: number) => {
+  const __setCurrent = (val: number) => {
     current.value = val;
-    syncSetFormData('page.current', val);
   };
-  const setSize = (val: number) => {
+  const __setSize = (val: number) => {
     size.value = val;
-    syncSetFormData('page.size', val);
   };
   const onChange = (current: number, size: number) => {
-    setCurrent(current);
-    setSize(size);
+    __setCurrent(current);
+    __setSize(size);
   };
   const changeCurrent = (current: number) => {
-    setCurrent(current);
+    __setCurrent(current);
   };
   const changePageSize = (size: number) => {
-    setSize(size);
+    __setSize(size);
   };
 
   // 构造代理的请求方法，不希望通过onBefore配置项去修改请求参数，以防错误的修改到响应式变量（这一点未验证，但是没啥必要去验证）
@@ -135,12 +114,11 @@ export const usePagination = <Params extends PageDTO, ItemVO>(
     const params: Params = {
       ...innerParams,
       page: {
-        current: unref(apiCurrent),
+        current: unref(currentForApi),
         size: unref(size),
       },
     } as Params;
-    // syncRewriteFormData(params);
-    const res = service(unref(formData));
+    const res = service(params);
     return res as Promise<PageVO<ItemVO>>;
   };
 
@@ -164,33 +142,18 @@ export const usePagination = <Params extends PageDTO, ItemVO>(
     { flush: 'pre' },
   );
 
-  // FIXME
-  // // 其他参数发生变化, 需要改变页码, 而改变页面会触发上面的请求
-  // const formDataWithoutPage = computed(() => omit(unref(formData), ['page']));
-  // watch(
-  //   formDataWithoutPage,
-  //   () => {
-  //     setCurrent(1);
-  //   },
-  //   { deep: !!1 },
-  // );
-
   response.pagination = {
     current,
     size,
     total,
     pages,
     list,
-    apiCurrent,
+    currentForApi,
     onChange,
     changeCurrent,
     changePageSize,
     changePagination: onChange,
   };
-
-  response.formData = editingFormData;
-
-  response.submit = submit;
 
   return response;
 };

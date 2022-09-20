@@ -9,10 +9,12 @@
 ## 前置知识
 
 > 副作用(effect)函数的含义是:  副作用函数的执行会直接或间接的影响其他函数的执行, 这时, 可以说该函数的执行产生的副作用.
-
+> 
 > 与之相对的概念应该是: 纯函数, 比如 `const add = (a, b) => a + b`
 
-vue的**响应式系统**就是通过收集副作用, 然后在合适的时刻将收集到的副作用重新执行.
+vue的**响应式系统**就是通过收集副作用, 然后在合适的时刻将收集到的副作用重新执行. 
+
+> 比如在任意作用域中修改：`document.documentElement.style.foo = 1`, `document`是宿主环境提供的，任意层级的函数作用域都可以访问。
 
 据我目前有限的了解, 我们代码里边会收集副作用的情况有:
 
@@ -197,7 +199,7 @@ tryOnUnMounted(() => {
    - 当然, 这样二次封装受到了 `element-ui`的 `<ElDialog />`影响.
    - 使用某些方法, 然后使用 `useModal(<MyDialog></MyDialog>)`这样似乎更好?
      - **UPDATE**: 已经实现了一个初步版本： `useDialog`
-3. vueuse 在很后面的版本新增了一个工具类型：`MaybeComputedRef`, 以及相对于的函数 `resolveUnref`，是上面的 `MaybeRef`和 `unref`的增强版。
+3. vueuse 在很后面的版本(v8.x.x以后)新增了一个工具类型：`MaybeComputedRef`, 以及相对于的函数 `resolveUnref`，是上面的 `MaybeRef`和 `unref`的增强版。 **更推荐推荐使用类型以及方法去处理参数**。
 
    resolveUnRef的 *实现* ：
 
@@ -223,7 +225,10 @@ tryOnUnMounted(() => {
    > 他们的使用方法可以参考 useDialog
    >
 
-   为什么需要这个类型：
+   
+   ***为什么需要这个类型***
+
+
    某些情况下，我们的hooks期望用户传入的内容是响应式的：
 
    ```ts

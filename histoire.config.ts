@@ -9,11 +9,11 @@ import { pathResolve } from './setup/utils/path';
  */
 const createGroup = (dirname: string, icon: string) => {
   const tmpl = {
-    id: dirname,
+    // id: dirname,
     title: `${icon} ${dirname} ${icon}`,
     include: (file) => {
       const absPath = pathResolve(file.path);
-      return new RegExp(`packages/${dirname}/(.+).story.vue$`).test(absPath);
+      return new RegExp(`packages/${dirname}/(.+).story.(vue|md)$`).test(absPath);
     },
   };
   return tmpl;
@@ -28,8 +28,8 @@ export default defineConfig({
   },
 
   theme: {
-    title: '📑 bluryar 前端文档库',
-    favicon: 'vite.svg',
+    title: 'bluryar 前端文档库',
+    favicon: 'robot.svg',
   },
 
   // * 每个.story.vue都会被这个文件导出的方法包裹

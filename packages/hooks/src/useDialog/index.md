@@ -1,5 +1,8 @@
 # useDialog
 
+[toc]
+
+
 适配对 `<AModal> 二次封装的弹窗的简易hook。`
 
 ```html
