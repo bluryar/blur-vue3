@@ -15,8 +15,8 @@
   "todo-tree.highlights.backgroundColourScheme": ["#FF0000", "#FF000080", "#ffb600AA", "#bcbec0AA", "#F2894DAA"],
 
   // Visuals
-  "editor.fontFamily": "Input Mono, Fira Code, monospace",
-  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss06', 'zero'",
+  // "editor.fontFamily": "Fira Code, monospace",
+  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss06', 'zero'",
 
   // Editor
   "editor.accessibilitySupport": "off",
