@@ -1,0 +1,14 @@
+{
+  "author": "bluryar",
+  "description": "使用pont生成接口, 提供开发时插件, 根据文件变动主动构建, 将产物限制为3个不同格式的js模块和1个.d.ts, 提供axios的默认封装",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@bluryar/api",
+  "scripts": {},
+  "version": "1.0.0",
+  "devDependencies": {
+    "axios": "^0.27.2",
+    "vue-request": "2.0.0-rc.4"
+  }
+}

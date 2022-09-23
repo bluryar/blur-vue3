@@ -25,6 +25,7 @@ class FaceDetectionVO {
 @Api(value = "xxxx", tags = "swagger tag的name")
 class FaceController {
   @ApiOperation()
+  @GetMapping())
   public List<xxx> getFaceList(){}
 
   @ApiOperation( nickname = "getFaceDetail222222222" )
@@ -80,7 +81,7 @@ class FaceDetectionVO {}
 
 最减少迁移成本和沟通成本的做法就是：
 
-1. `@ApiModel`使用方式 `@ApiModel( description = "中文说明")`
+1. `@ApiModel`使用方式 `@ApiModel( description = "中文说明" )`
 2. 后端Controller命名和被 `@ApiOperation`修饰的方法名尽量不要改动，改用给接口打@deprecated注解的方式废弃掉接口，然后让这个接口返回403，或302/308等状态码，并且告知前端将这个接口改成新的接口。
 
 注意： 已经使用老写法的项目不要按上述方法改动，原来的接口保持原样，新增的接口尽量按照这样来。
@@ -91,6 +92,8 @@ class FaceDetectionVO {}
 
 原因是pont的bug，我提了这个issue：[同时启用&#34;usingMultipleOrigins&#34;: true和&#34;spiltApiLock&#34;: true - 新增数据源时会报文件不存在的异常](https://github.com/alibaba/pont/issues/338)。
 
+【update】： 数据源的name要和生成的模块文件夹命名和api-lock.json中的name保持一致
+
 如果是不方便改成 `spiltApiLock: false`的项目，需要手动在 `src/api/generated`下，新增对于数据源的文件夹，然后在这个文件夹中新增文件：`api-lock.json`， 添加内容如下：
 
 ```json
@@ -98,8 +101,12 @@ class FaceDetectionVO {}
 {
   "mods": [],
   "name": "数据源",
-  "baseClass": []
+  "baseClasses": []
 }
 ```
 
 然后，在 `pont-config.json`中正常新增数据源配置即可
+
+
+2. TypeError: Cannot read properties of undefined (reading 'request')
+   按照上面的方法2可以避免

@@ -1,4 +1,10 @@
 {
+  "DIRNAME": {
+    "prefix": "dirname",
+    "body": "const __dirname = fileURLToPath(new URL('.', import.meta.url))",
+    "description": "nodejs在ESM下获取当前文件夹路径的一个方法"
+  },
+
   "🛠️ vue-hooks": {
     "prefix": "vue-hooks",
     "body": [
