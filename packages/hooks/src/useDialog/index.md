@@ -1,48 +1,17 @@
 # useDialog
 
-[toc]
-
+[[toc]]
 
 适配对 `<AModal> 二次封装的弹窗的简易hook。`
 
-```html
-<script>
-const props = defineProps({
-  foo: {
-    type: String
-  }
-})
-const { Dialog, openDialog, visible } = useDialog( 
-  () => import('path/to/dialog.vue'), 
-  () => ({
-    // 维持响应式
-    dialogFoo: props.foo
-    //【可选】 默认值，下面会覆盖这个值
-    detail: {}
-  }) 
-)
+::: info
+123
+:::
 
-watch(visible, ()=>{
-  // 如果需要观察子组件的visible的话
-})
-</script>
-
-<template>
-  <div>
-    <!-- 当前版本需要手动挂载到DOM，没有找到可以动态将VNode插入当前组件上下文的方法 -->
-    <!-- 这里也是可以传入参数的 -->
-    <Dialog :detail="{}"></Dialog>
-
-    <!-- ... -->
-    <!-- 这里只传入了detail，会跟hook、组件上的同名变量进行优先级合并（实际上就是解构模板字符串的顺序而已 -->
-    <!-- openDialog 的优先级最高，上面的组件绑定次之, hook中定义的优先级最低 -->
-  
-    <ul>
-      <li v-for="vo in list" @click="openDialog({detail: vo})">{{vo.name}}</li>
-    </ul>
-  </div>
-</template>
 ```
+测试
+```
+
 
 ## 背景
 
@@ -64,7 +33,7 @@ watch(visible, ()=>{
 
 一般我安装这个模板封装弹窗：
 
-```html
+```html{5}
 <script lang="ts" setup>
 import type { Modal } from '@arco-design/web-vue';
 import { useVModel } from '@vueuse/core';

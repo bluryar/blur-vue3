@@ -286,5 +286,6 @@
   "volar.codeLens.references": false,
   "volar.diagnostics.delay": 300,
   "volar.icon.preview": false,
-  "volar.updateImportsOnFileMove.enabled": false
+  "volar.updateImportsOnFileMove.enabled": false,
+  "vscode-office.viewAbsoluteLocal": true
 }

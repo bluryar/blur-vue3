@@ -35,10 +35,6 @@ const refData = ref({
 
 const other = computed(() => omit(unref(refData), ['page']));
 const other2 = reactiveOmit(unref(refData), 'page');
-let obj = {};
-
-set(obj, '', { test: 1, test2: {} });
-console.log('🚀 ~ file: index.story.vue ~ line 41 ~ obj', obj);
 
 watch(
   refData,

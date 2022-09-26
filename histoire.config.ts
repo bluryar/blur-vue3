@@ -2,6 +2,12 @@
 import { defineConfig } from 'histoire';
 import { HstVue } from '@histoire/plugin-vue';
 import { pathResolve } from './setup/utils/path';
+import { tocPlugin } from '@mdit-vue/plugin-toc';
+import { sfcPlugin } from '@mdit-vue/plugin-sfc';
+import { componentPlugin } from '@mdit-vue/plugin-component';
+import ToDoList from 'markdown-it-task-lists';
+import { containerPlugin } from './setup/markdown-it/contianer';
+import copyCodePlugin from './setup/markdown-it/copyCode';
 
 /**
  * @param dirname 相对于当前文件所在路径
@@ -52,6 +58,19 @@ export default defineConfig({
   storyMatch: ['packages/components/**/*.story.vue', 'packages/hooks/**/*.story.vue'],
 
   markdown(md) {
+    // third
+    md.use(ToDoList);
+
+    // @mdit-vue
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    md.use(tocPlugin);
+    md.use(sfcPlugin);
+    md.use(componentPlugin);
+
+    // custom
+    md.use(containerPlugin);
+    md.use(copyCodePlugin);
+
     return md;
   },
 });
