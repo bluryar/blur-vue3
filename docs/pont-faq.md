@@ -2,9 +2,9 @@
 
 前端目前使用这个库生成接口代码和实体类：[alibaba/pont](https://github.com/alibaba/pont)。
 
-> 1. `@ApiModel`注解参数传递方式会影响前端生成出来的
-> 2. 后端 `Controller`的类名会被作为前端接口请求函数的前缀。
-> 3. Controller中被 `@ApiOperation`修饰的方法名会作为前端接口请求方法的后缀。
+> 1. `@ApiModel` *注解参数*传递方式会影响前端生成出来的实体类。
+> 2. 后端 `Controller` 的*类名*会被作为前端接口请求函数的前缀。
+> 3. Controller中被 `@ApiOperation` 修饰的*方法名*会作为前端接口请求方法的后缀。
 >
 > 影响到前端接口代码生成的后端类：Controller、DTO、VO
 
@@ -23,19 +23,60 @@ class FaceDetectionVO {
 }
 
 @Api(value = "xxxx", tags = "swagger tag的name")
+@RequestMapping("/face")
 class FaceController {
   @ApiOperation()
-  @GetMapping())
+  @GetMapping('/list')
   public List<xxx> getFaceList(){}
 
   @ApiOperation( nickname = "getFaceDetail222222222" )
+  @GetMapping('/:id')
   public List<xxx> getFaceDetail(){}
 }
 
 @Api(value = "xxxx", tags = "car")
+@RequestMapping("/vehicle")
 class VehicleController {
   @ApiOperation()
+  @GetMapping('/list')
   public List<xxx> getList(){}
+}
+```
+
+生成出来的swagger.json:
+```json
+{
+  "version": "2.0",
+  "tags": [
+    {
+      "name": "car",
+      "description": "Vehicle Controller"
+    },
+    {
+      "name": "swagger tag的name", // 这个在swagger-ui中表现为左侧侧边栏一级菜单
+      "description": "Face Controller" // 因此pont选择了用“description”作为兜底机制
+    }
+  ],
+  "definitions": {
+    "张三": { 
+      // ...
+    },
+    "FaceDetectionVO": { 
+      // ...
+      "title": "人脸检测VO"
+    },
+  },
+  "paths": {
+    "/face/list": {
+      "get": {},
+    },
+    "/face/{id}": {
+      "get": {},
+    },
+    "/vehicle/list": {
+      "get": {},
+    },
+  }
 }
 ```
 

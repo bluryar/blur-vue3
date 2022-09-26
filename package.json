@@ -83,6 +83,7 @@
     "lodash-es": "^4.17.21",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
+    "markdown-it-highlight-lines": "^1.0.2",
     "markdown-it-task-lists": "^2.1.1",
     "naive-ui": "^2.33.3",
     "nprogress": "^0.2.0",

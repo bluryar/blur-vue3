@@ -33,7 +33,7 @@
 
 一般我安装这个模板封装弹窗：
 
-```html{5}
+```html{1,2,3,}
 <script lang="ts" setup>
 import type { Modal } from '@arco-design/web-vue';
 import { useVModel } from '@vueuse/core';
@@ -68,7 +68,7 @@ export default defineComponent({
 
 那么在使用这个 `<MyDialog>`时，就可以用这种方式:
 
-```html
+```html{6-10}
 <script lang="ts" setup>
 const { Dialog, openDialog } = useDialog(
   defineAsyncComponent(() => import('./MyDialog.vue')),

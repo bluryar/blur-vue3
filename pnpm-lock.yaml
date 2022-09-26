@@ -66,6 +66,7 @@ importers:
       lodash-es: ^4.17.21
       markdown-it: ^13.0.1
       markdown-it-container: ^3.0.0
+      markdown-it-highlight-lines: ^1.0.2
       markdown-it-task-lists: ^2.1.1
       naive-ui: ^2.33.3
       nprogress: ^0.2.0
@@ -166,6 +167,7 @@ importers:
       lodash-es: 4.17.21
       markdown-it: 13.0.1
       markdown-it-container: 3.0.0
+      markdown-it-highlight-lines: 1.0.2
       markdown-it-task-lists: 2.1.1
       naive-ui: 2.33.3_vue@3.2.39
       nprogress: 0.2.0
@@ -4597,6 +4599,10 @@ packages:
 
   /markdown-it-emoji/2.0.2:
     resolution: {integrity: sha512-zLftSaNrKuYl0kR5zm4gxXjHaOI3FAOEaloKmRA5hijmJZvSjmxcokOLlzycb/HXlUFWzXqpIEoyEMCE4i9MvQ==}
+    dev: true
+
+  /markdown-it-highlight-lines/1.0.2:
+    resolution: {integrity: sha512-9Pyt/B+Ca3QBSXDS/znmojy/k6HDe8FJlJwIj/BKgvxE3MQWK9GHQCJJT5Lb1er23svZT99kJ/YRhLpDK+5GUQ==}
     dev: true
 
   /markdown-it-task-lists/2.1.1:

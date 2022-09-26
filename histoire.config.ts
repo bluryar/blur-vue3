@@ -5,9 +5,10 @@ import { pathResolve } from './setup/utils/path';
 import { tocPlugin } from '@mdit-vue/plugin-toc';
 import { sfcPlugin } from '@mdit-vue/plugin-sfc';
 import { componentPlugin } from '@mdit-vue/plugin-component';
-import ToDoList from 'markdown-it-task-lists';
+import taskListPlugin from 'markdown-it-task-lists';
 import { containerPlugin } from './setup/markdown-it/contianer';
 import copyCodePlugin from './setup/markdown-it/copyCode';
+import highlightLinePlugin from 'markdown-it-highlight-lines';
 
 /**
  * @param dirname 相对于当前文件所在路径
@@ -59,7 +60,7 @@ export default defineConfig({
 
   markdown(md) {
     // third
-    md.use(ToDoList);
+    md.use(taskListPlugin);
 
     // @mdit-vue
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -70,6 +71,7 @@ export default defineConfig({
     // custom
     md.use(containerPlugin);
     md.use(copyCodePlugin);
+    md.use(highlightLinePlugin);
 
     return md;
   },
